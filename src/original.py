@@ -6,16 +6,16 @@ mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
 mp_pose = mp.solutions.pose
 
-cap = cv2.VideoCapture('first30s.mp4')
+cap = cv2.VideoCapture('assets/first30s.mp4')
 with mp_pose.Pose(
     min_detection_confidence=0.5,
     min_tracking_confidence=0.5) as pose:
   while cap.isOpened():
     success, image = cap.read()
     if not success:
-      print("Ignoring empty camera frame.")
-      # If loading a video, use 'break' instead of 'continue'.
-      break
+        print("Ignoring empty camera frame.")
+        # If loading a video, use 'break' instead of 'continue'.
+        break
 
     # To improve performance, optionally mark the image as not writeable to
     # pass by reference.
@@ -37,11 +37,7 @@ with mp_pose.Pose(
     f = open("data/input.txt", "a")
     f.write(str(results.pose_landmarks))
     f.close()
-  
 
-    
-
-    
     if cv2.waitKey(1) == ord('q'):
       break
 cap.release()
