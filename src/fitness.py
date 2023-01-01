@@ -1,5 +1,7 @@
 import cv2 as cv
+import sys
 import mediapipe as mp
+sys.path.append('../fitness-tracker')
 import utils
 import math 
 
@@ -8,15 +10,13 @@ mp_drawing_styles = mp.solutions.drawing_styles
 mp_pose = mp.solutions.pose
 
 coordinates_original = utils.parse_input('data/input.txt')
-
-
 i = 0
 # For webcam input:
 cap = cv.VideoCapture(0)
 with mp_pose.Pose(
     min_detection_confidence=0.5,
     min_tracking_confidence=0.5) as pose:
-    while cap.isOpened():
+    while cap.isOpened() and i < len(coordinates_original):
         success, image = cap.read()
         if not success:
             print("Ignoring empty camera frame.")
@@ -53,10 +53,11 @@ with mp_pose.Pose(
             else:
                 visibility2 = coordinates_original[i][k]
 
-        print(math.sqrt(pow(x2-x,2)+pow(y2-y,2)+pow(z2-z,2)))
-        
+        #print(math.sqrt(pow(x2-x,2)+pow(y2-y,2)+pow(z2-z,2)))
 
+        i += 1
+        print(i)
         if cv.waitKey(5) & 0xFF == 27:
             break
-        i += 1
+        
 cap.release()
